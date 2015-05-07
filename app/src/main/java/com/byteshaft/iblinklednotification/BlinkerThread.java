@@ -20,24 +20,10 @@ public class BlinkerThread {
         mTimer.schedule(getFlashlightOffTimerTask(), 150);
         mTimer.schedule(getFlashlightOnTimerTask(), 150 + 300);
         mTimer.schedule(getFlashlightOffTimerTask(), 150 + 300 + 500);
-        
-//        while (CallStateListener.isCallIncoming) {
-//            blinkFlash(150, 300);
-//        }
         // Make sure to release any camera resources so that it
         // can be used by other Apps.
         mFlashlight.releaseAllResources();
     }
-
-//    private void blinkFlash(int onPeriod, int offPeriod) {
-//        mFlashlight.turnOn();
-//        causeSleep(onPeriod);
-//        mFlashlight.turnOff();
-//        causeSleep(offPeriod);
-//        mFlashlight.turnOn();
-//        causeSleep(500);
-//        mFlashlight.turnOff();
-//    }
 
     private TimerTask getFlashlightOffTimerTask() {
         return new TimerTask() {
