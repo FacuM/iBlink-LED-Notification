@@ -8,7 +8,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
-
 public class MainActivity extends ActionBarActivity implements Switch.OnCheckedChangeListener {
 
     private Switch mCallSwitch;

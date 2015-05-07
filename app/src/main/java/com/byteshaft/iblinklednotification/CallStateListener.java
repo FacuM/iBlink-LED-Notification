@@ -1,6 +1,5 @@
 package com.byteshaft.iblinklednotification;
 
-
 import android.content.Context;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;

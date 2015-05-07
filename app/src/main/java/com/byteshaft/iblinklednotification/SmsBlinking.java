@@ -1,6 +1,5 @@
 package com.byteshaft.iblinklednotification;
 
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
