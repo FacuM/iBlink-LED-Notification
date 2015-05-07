@@ -9,7 +9,7 @@ import android.telephony.TelephonyManager;
 public class FlashlightService extends Service {
 
     private TelephonyManager mTelephonyManager;
-    private static CallStateListener mCallStateListener;
+    private CallStateListener mCallStateListener;
     private static FlashlightService sService;
 
     public static FlashlightService getInstance() {
@@ -21,9 +21,7 @@ public class FlashlightService extends Service {
         super.onCreate();
         sService = this;
         mTelephonyManager = getTelephonyManager();
-        if (mCallStateListener == null) {
-            mCallStateListener = new CallStateListener(this);
-        }
+        mCallStateListener = new CallStateListener(this);
         mTelephonyManager.listen(mCallStateListener, PhoneStateListener.LISTEN_CALL_STATE);
     }
 
@@ -43,6 +41,7 @@ public class FlashlightService extends Service {
     public IBinder onBind(Intent intent) {
         return null;
     }
+
     private TelephonyManager getTelephonyManager() {
         return (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
     }

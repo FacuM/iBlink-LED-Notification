@@ -38,6 +38,11 @@
 
         </receiver>
         <service android:name=".FlashlightService"/>
+        <receiver android:name=".CallBilnker">
+            <intent-filter>
+                <action android:name="com.byteshaft.iblinklednotification.CALL_RECEIVED"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

@@ -1,13 +1,12 @@
 package com.byteshaft.iblinklednotification;
 
 import android.content.Context;
+import android.content.Intent;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 
 public class CallStateListener extends PhoneStateListener {
 
-    public static boolean sIsCallIncoming;
-    private static Flashlight mFlashlight;
     private Context mContext;
 
     public CallStateListener(Context context) {
@@ -17,24 +16,14 @@ public class CallStateListener extends PhoneStateListener {
     @Override
     public void onCallStateChanged(int state, String incomingNumber) {
         super.onCallStateChanged(state, incomingNumber);
-        // We want the mFlashlight thread object to be created
-        // only once, that's why declare it a static and only
-        // initialize Flashlight if the object is null.
-        if (mFlashlight == null) {
-            mFlashlight = new Flashlight(mContext);
-        }
         switch (state) {
             case TelephonyManager.CALL_STATE_RINGING:
-                sIsCallIncoming = true;
-                mFlashlight.startBlinking();
+                Intent intent = new Intent("com.byteshaft.iblinklednotification.CALL_RECEIVED");
+                mContext.sendBroadcast(intent);
                 break;
             case TelephonyManager.CALL_STATE_IDLE:
-                // The loop in Flashlight.java will just break if this
-                // variable is set to false.
-                sIsCallIncoming = false;
                 break;
             case TelephonyManager.CALL_STATE_OFFHOOK:
-                sIsCallIncoming = false;
                 break;
         }
     }
