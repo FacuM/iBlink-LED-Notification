@@ -3,19 +3,19 @@ package com.byteshaft.iblinklednotification;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.widget.Toast;
 
-import com.byteshaft.ezflashlight.*;
+import com.byteshaft.ezflashlight.CameraStateChangeListener;
 
 public class CallBilnker extends BroadcastReceiver implements CameraStateChangeListener {
     private com.byteshaft.ezflashlight.Flashlight mFlashlight;
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        Helpers hlepers = new Helpers(context.getApplicationContext());
+
         Toast.makeText(context.getApplicationContext(), "Received", Toast.LENGTH_SHORT).show();
-        if (isSmsBlinkingEnabled(context)) {
+        if (hlepers.isSmsBlinkingEnabled()) {
             mFlashlight = new com.byteshaft.ezflashlight.Flashlight(context);
             mFlashlight.setOnCameraStateChangedListener(this);
             mFlashlight.initializeCamera();
@@ -42,11 +42,6 @@ public class CallBilnker extends BroadcastReceiver implements CameraStateChangeL
             e.printStackTrace();
         }
         mFlashlight.releaseAllResources();
-    }
-
-    private boolean isSmsBlinkingEnabled(Context context) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return sharedPreferences.getBoolean("smsblink", false);
     }
 
     @Override
