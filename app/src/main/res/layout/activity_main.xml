@@ -7,14 +7,14 @@
     >
 
     <Switch
-        android:id="@+id/aSwitch"
+        android:id="@+id/call_switch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:text="Blinker for call"
         />
     <Switch
-        android:id="@+id/aSwitch1"
+        android:id="@+id/sms_switch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/aSwitch"

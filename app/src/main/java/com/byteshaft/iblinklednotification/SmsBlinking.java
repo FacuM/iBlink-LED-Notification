@@ -5,45 +5,44 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.hardware.Camera;
 import android.preference.PreferenceManager;
 
-import com.byteshaft.ezflashlight.*;
+import com.byteshaft.ezflashlight.CameraStateChangeListener;
 import com.byteshaft.ezflashlight.Flashlight;
 
 public class SmsBlinking extends BroadcastReceiver implements CameraStateChangeListener {
 
-    com.byteshaft.ezflashlight.Flashlight flashlight;
+    private com.byteshaft.ezflashlight.Flashlight mFlashlight;
 
     @Override
     public void onReceive(Context context, Intent intent) {
         if (isSmsBlinkingEnabled(context)) {
-            flashlight = new Flashlight(context);
-            flashlight.setOnCameraStateChangedListener(this);
-            flashlight.initializeCamera();
+            mFlashlight = new Flashlight(context);
+            mFlashlight.setOnCameraStateChangedListener(this);
+            mFlashlight.initializeCamera();
         }
     }
 
     public void blinkingMode() {
-        flashlight.turnOn();
+        mFlashlight.turnOn();
         try {
             Thread.sleep(150);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        flashlight.turnOff();
+        mFlashlight.turnOff();
         try {
             Thread.sleep(100);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        flashlight.turnOn();
+        mFlashlight.turnOn();
         try {
             Thread.sleep(150);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        flashlight.releaseAllResources();
+        mFlashlight.releaseAllResources();
     }
 
     private boolean isSmsBlinkingEnabled(Context context) {

@@ -8,18 +8,18 @@ import android.telephony.TelephonyManager;
 
 public class FlashlightService extends Service {
 
-    TelephonyManager mTelephonyManager;
+    private TelephonyManager mTelephonyManager;
     private static CallStateListener mCallStateListener;
-    private static FlashlightService service = null;
+    private static FlashlightService sService;
 
     public static FlashlightService getInstance() {
-        return service;
+        return sService;
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
-        service = this;
+        sService = this;
         mTelephonyManager = getTelephonyManager();
         if (mCallStateListener == null) {
             mCallStateListener = new CallStateListener(this);
@@ -35,7 +35,7 @@ public class FlashlightService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        service = null;
+        sService = null;
         mTelephonyManager.listen(mCallStateListener, PhoneStateListener.LISTEN_NONE);
     }
 

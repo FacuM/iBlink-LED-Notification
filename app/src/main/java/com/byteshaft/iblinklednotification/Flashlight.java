@@ -8,16 +8,16 @@ import com.byteshaft.ezflashlight.CameraStateChangeListener;
 @SuppressWarnings("deprecation")
 public class Flashlight extends ContextWrapper implements CameraStateChangeListener {
 
-    private com.byteshaft.ezflashlight.Flashlight flashlight = null;
+    private com.byteshaft.ezflashlight.Flashlight mFlashlight;
 
     public Flashlight(Context context) {
         super(context);
     }
 
     void startBlinking() {
-        flashlight = new com.byteshaft.ezflashlight.Flashlight(this);
-        flashlight.setOnCameraStateChangedListener(this);
-        flashlight.initializeCamera();
+        mFlashlight = new com.byteshaft.ezflashlight.Flashlight(this);
+        mFlashlight.setOnCameraStateChangedListener(this);
+        mFlashlight.initializeCamera();
     }
 
     @Override
@@ -27,12 +27,12 @@ public class Flashlight extends ContextWrapper implements CameraStateChangeListe
 
     @Override
     public void onCameraViewSetup() {
-        new BlinkerThread(flashlight).blink();
+        new BlinkerThread(mFlashlight).blink();
     }
 
     @Override
     public void onCameraBusy() {
-        CallStateListener.isCallIncoming = false;
+        CallStateListener.sIsCallIncoming = false;
     }
 
     @Override

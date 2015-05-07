@@ -11,31 +11,30 @@ import android.widget.Switch;
 
 public class MainActivity extends ActionBarActivity implements Switch.OnCheckedChangeListener {
 
-    Switch mSwitch;
-    Switch mSwitch1;
+    private Switch mCallSwitch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mSwitch = (Switch) findViewById(R.id.aSwitch);
-        mSwitch1 = (Switch) findViewById(R.id.aSwitch1);
-        mSwitch.setOnCheckedChangeListener(this);
-        mSwitch1.setOnCheckedChangeListener(this);
+        mCallSwitch = (Switch) findViewById(R.id.call_switch);
+        Switch smsSwitch = (Switch) findViewById(R.id.sms_switch);
+        mCallSwitch.setOnCheckedChangeListener(this);
+        smsSwitch.setOnCheckedChangeListener(this);
 
     }
     @Override
     protected void onResume() {
         super.onResume();
         if (FlashlightService.getInstance() != null) {
-            mSwitch.setChecked(true);
+            mCallSwitch.setChecked(true);
         }
     }
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         switch (buttonView.getId()) {
-            case R.id.aSwitch:
+            case R.id.call_switch:
                 if (isChecked) {
                     if (FlashlightService.getInstance() == null) {
                         startService(new Intent(this, FlashlightService.class));
@@ -46,7 +45,7 @@ public class MainActivity extends ActionBarActivity implements Switch.OnCheckedC
                     saveServiceStateEnabled(false);
                 }
                 break;
-            case R.id.aSwitch1:
+            case R.id.sms_switch:
                 if (isChecked) {
                     enableSmsBlink(true);
                 } else {

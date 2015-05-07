@@ -5,10 +5,10 @@ import java.util.TimerTask;
 
 public class BlinkerThread {
 
-    private com.byteshaft.ezflashlight.Flashlight flashlight;
+    private com.byteshaft.ezflashlight.Flashlight mFlashlight;
 
-    public BlinkerThread(com.byteshaft.ezflashlight.Flashlight flashlight) {
-        this.flashlight = flashlight;
+    public BlinkerThread(com.byteshaft.ezflashlight.Flashlight mFlashlight) {
+        this.mFlashlight = mFlashlight;
     }
 
     void blink() {
@@ -16,7 +16,7 @@ public class BlinkerThread {
         // `isCallIncoming` becomes true as soon as an incoming call
         // notification starts and becomes false when call is picked/dropped.
         // So we can rely on it to do our blinking.
-        flashlight.turnOn();
+        mFlashlight.turnOn();
         mTimer.schedule(getFlashlightOffTimerTask(), 150);
         mTimer.schedule(getFlashlightOnTimerTask(), 150 + 300);
         mTimer.schedule(getFlashlightOffTimerTask(), 150 + 300 + 500);
@@ -26,24 +26,24 @@ public class BlinkerThread {
 //        }
         // Make sure to release any camera resources so that it
         // can be used by other Apps.
-        flashlight.releaseAllResources();
+        mFlashlight.releaseAllResources();
     }
 
 //    private void blinkFlash(int onPeriod, int offPeriod) {
-//        flashlight.turnOn();
+//        mFlashlight.turnOn();
 //        causeSleep(onPeriod);
-//        flashlight.turnOff();
+//        mFlashlight.turnOff();
 //        causeSleep(offPeriod);
-//        flashlight.turnOn();
+//        mFlashlight.turnOn();
 //        causeSleep(500);
-//        flashlight.turnOff();
+//        mFlashlight.turnOff();
 //    }
 
     private TimerTask getFlashlightOffTimerTask() {
         return new TimerTask() {
             @Override
             public void run() {
-                flashlight.turnOff();
+                mFlashlight.turnOff();
             }
         };
     }
@@ -52,7 +52,7 @@ public class BlinkerThread {
         return new TimerTask() {
             @Override
             public void run() {
-                flashlight.turnOn();
+                mFlashlight.turnOn();
             }
         };
     }
