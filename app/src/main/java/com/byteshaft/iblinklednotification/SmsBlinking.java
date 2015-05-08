@@ -10,6 +10,7 @@ import com.byteshaft.ezflashlight.Flashlight;
 public class SmsBlinking extends BroadcastReceiver implements CameraStateChangeListener {
 
     private com.byteshaft.ezflashlight.Flashlight mFlashlight;
+    private int i = 0;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -22,25 +23,24 @@ public class SmsBlinking extends BroadcastReceiver implements CameraStateChangeL
     }
 
     public void blinkingMode() {
-        mFlashlight.turnOn();
-        try {
-            Thread.sleep(150);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        final int pattern[] = {0, 200, 300, 200, 400, 100, 200};
+        if (i > pattern.length - 1) {
+            mFlashlight.releaseAllResources();
+            return;
         }
-        mFlashlight.turnOff();
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        mFlashlight.turnOn();
-        try {
-            Thread.sleep(150);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        mFlashlight.releaseAllResources();
+        new android.os.Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (i % 2 == 0) {
+                    mFlashlight.turnOn();
+                } else {
+                    mFlashlight.turnOff();
+
+                }
+                i += 1;
+                blinkingMode();
+            }
+        }, pattern[i]);
     }
 
     @Override
