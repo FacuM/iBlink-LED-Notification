@@ -1,27 +1,41 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     tools:context=".MainActivity"
     >
 
     <Switch
+        android:layout_gravity="center"
         android:id="@+id/call_switch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Blinker for call"
-        android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/sms_switch"
-        android:layout_alignStart="@+id/sms_switch"
-        android:layout_marginBottom="225dp" />
+        android:text="@string/BlinkForCall"
+        android:layout_marginLeft="10dp"
+        android:layout_margin="5dp"/>
+
     <Switch
+
+        android:layout_gravity="center"
         android:id="@+id/sms_switch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Blinker for sms"
-        android:layout_above="@+id/call_switch"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="111dp" />
+        android:text="@string/BlinkForSMS"
+        android:layout_marginLeft="10dp"
+        android:layout_margin="5dp"/>
 
-</RelativeLayout>
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/holo_blue_dark"/>
+
+    <Button
+        style="?android:attr/buttonBarButtonStyle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Close"
+        android:id="@+id/close_button"
+        android:layout_gravity="center_vertical" />
+
+</LinearLayout>

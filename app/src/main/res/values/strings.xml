@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">iBlink LED Notification</string>
-    <string name="hello_world">This space was intentionally left blank.</string>
+    <string name="app_name">iBlink</string>
+    <string name="BlinkForCall">Blinker for call</string>
+    <string name="BlinkForSMS">Blinker for sms</string>
 
 </resources>
