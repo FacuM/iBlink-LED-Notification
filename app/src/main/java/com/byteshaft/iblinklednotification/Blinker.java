@@ -10,14 +10,17 @@ public class Blinker extends BroadcastReceiver implements CameraStateChangeListe
 
     private final String SMS_ACTION = "android.provider.Telephony.SMS_RECEIVED";
     private final String CALL_ACTION = "com.byteshaft.iblinklednotification.CALL_RECEIVED";
+    private int pattern[];
     private com.byteshaft.ezflashlight.Flashlight mFlashlight;
     private int mPatternRecursionCounter = 0;
     private String mIntentAction;
     private Helpers mHelpers;
+    private boolean mIsRunningForTheFirstTime = true;
 
     @Override
     public void onReceive(Context context, Intent intent) {
         mHelpers = new Helpers(context.getApplicationContext());
+        pattern = mHelpers.getSelectedPattern();
         mIntentAction = intent.getAction();
         if (mIntentAction.equals(SMS_ACTION) ||
                 mIntentAction.equals(CALL_ACTION)) {
@@ -30,17 +33,20 @@ public class Blinker extends BroadcastReceiver implements CameraStateChangeListe
     }
 
     public void blinkForCall() {
-        final int pattern[] = {50, 100, 50, 100, 300};
         if (mPatternRecursionCounter > pattern.length - 1 && CallStateListener.isCallIncoming()) {
             mPatternRecursionCounter = 0;
         } else if (mPatternRecursionCounter > pattern.length - 1) {
             mFlashlight.releaseAllResources();
             return;
         }
+        if (mIsRunningForTheFirstTime) {
+            mFlashlight.turnOn();
+            mIsRunningForTheFirstTime = false;
+        }
         new android.os.Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (mPatternRecursionCounter % 2 != 0 && CallStateListener.isCallIncoming()) {
+                if (mPatternRecursionCounter % 2 == 0 && CallStateListener.isCallIncoming()) {
                     mFlashlight.turnOn();
                 } else {
                     mFlashlight.turnOff();
@@ -53,15 +59,18 @@ public class Blinker extends BroadcastReceiver implements CameraStateChangeListe
     }
 
     public void blinkForSMS() {
-        final int pattern[] = {100, 50, 100, 50, 150, 50};
         if (mPatternRecursionCounter > pattern.length - 1) {
             mFlashlight.releaseAllResources();
             return;
         }
+        if (mIsRunningForTheFirstTime) {
+            mFlashlight.turnOn();
+            mIsRunningForTheFirstTime = false;
+        }
         new android.os.Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (mPatternRecursionCounter % 2 != 0) {
+                if (mPatternRecursionCounter % 2 == 0) {
                     mFlashlight.turnOn();
                 } else {
                     mFlashlight.turnOff();
@@ -99,6 +108,5 @@ public class Blinker extends BroadcastReceiver implements CameraStateChangeListe
 
     @Override
     public void onFlashlightTurnedOff() {
-
     }
 }

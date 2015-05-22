@@ -11,7 +11,7 @@ public class Helpers extends ContextWrapper{
     }
 
     boolean isCallBlinkingEnabled() {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences sharedPreferences = getPreferenceManager();
         return sharedPreferences.getBoolean("call_blink", false);
     }
 
@@ -25,7 +25,7 @@ public class Helpers extends ContextWrapper{
         sharedPreferences.edit().putBoolean("enabled", enable).apply();
     }
     boolean isSmsBlinkingEnabled() {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences sharedPreferences = getPreferenceManager();
         return sharedPreferences.getBoolean("sms_blink", false);
     }
 
@@ -34,7 +34,30 @@ public class Helpers extends ContextWrapper{
         sharedPreferences.edit().putBoolean("sms_blink", enable).apply();
     }
 
-    public SharedPreferences getPreferenceManager() {
+    SharedPreferences getPreferenceManager() {
         return PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+    }
+
+    int[] getSelectedPattern() {
+        SharedPreferences sharedPreferences = getPreferenceManager();
+        String currentSelectedPattern = sharedPreferences.getString("blink_pattern", "normal");
+
+        switch (currentSelectedPattern) {
+            case "normal":
+                return new int[] {150, 300, 150, 300, 150, 750};
+            case "slow":
+                return new int[] {300, 300, 300, 300, 300, 750};
+            case "fast":
+                return new int[] {100, 200, 100, 200, 100, 750};
+            case "very_fast":
+                return new int[] {50, 100, 50, 100, 50, 750};
+            default:
+                return new int[] {150, 300, 150, 300, 150, 750};
+        }
+    }
+
+    void savePatternSetting(String pattern) {
+        SharedPreferences sharedPreferences = getPreferenceManager();
+        sharedPreferences.edit().putString("blink_pattern", pattern).apply();
     }
 }
